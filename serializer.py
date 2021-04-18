@@ -24,7 +24,7 @@ class JsonSerializer:
         self._current_object[name] = value
 
     def to_str(self):
-        return json.dumps(self._current_object, indent = 4)
+        return json.dumps(self._current_object, default=lambda o: o.__dict__)
 
 class XmlSerializer:
     def __init__(self):
@@ -59,6 +59,5 @@ factory.register_format('XML', XmlSerializer)
 class ObjectSerializer:
     def serialize(self, serializable, format):
         serializer = factory.get_serializer(format)
-        print("serialer---", serializer)
         serializable.serialize(serializer)
         return serializer.to_str()

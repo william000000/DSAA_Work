@@ -61,6 +61,10 @@ if __name__ == "__main__":
     student = serializer.Student(user_id, first_name, last_name, password)
     serializers = serializer.ObjectSerializer()
     transformed_data = serializers.serialize(student, extension_type)
+    is_data_inserted = student_class.is_data_exist(f'{FILE_NAME}.{extension_type.lower()}', user_input_id)
+    if is_data_inserted:
+        print("The data had already been inserted, No worries!")
+        exit(1)
     add_student_format = student_class.add_to_final_list(f'{FILE_NAME}.{extension_type.lower()}', user_input_id, transformed_data)
 
     # When Server is on, it will send student data to our server
