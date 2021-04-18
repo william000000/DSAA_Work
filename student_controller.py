@@ -46,29 +46,25 @@ class StudentOperation:
             return False
         return True
         
-
-    def is_student_exist(self, file_name : str, student_id : str) -> bool:
+    def is_data_exist(self, file_name: str, user_id: str) -> bool:
         try:
-            with open(file_name, 'r') as result_file:
-                for record in result_file:
-                    if record.startswith(f'id:{student_id}'):
-                        print("Trueee")
+            with open(file_name, 'r') as f:
+                for data in f:
+                    if re.search(user_id, data):
                         return True
         except FileNotFoundError:
-            pass
+            pass 
         return False
 
     def add_to_final_list(self, file_name: str, user_id: str, data: str) -> bool:
-
-        if self.is_student_exist(file_name, user_id):
+        if self.is_data_exist(file_name, user_id):
             return print("The User has already been updated in final_student.txt!")
             
         try:
-            with open(file_name, 'a') as user_file:   
-                user_file.write(data)
+            with open(file_name, 'a') as user_file:
+                user_file.write(f'{data}')
 
         except FileNotFoundError:
             pass 
         return True
-
 
